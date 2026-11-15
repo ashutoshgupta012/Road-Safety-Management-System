@@ -1,0 +1,26 @@
+# Node dependencies
+frontend/node_modules/
+node_modules/
+
+# Python cache & compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Environment files
+.env
+.venv/
+env/
+venv/
+
+# Backup folders
+_old_tender_backup/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Large archives (optional)
+# Road_Safety_Management_System.zip
