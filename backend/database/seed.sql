@@ -4,12 +4,12 @@
 -- 1. Default Users (Admin and Citizens)
 -- Password for all seed users is 'admin123' or 'user123' (SHA256 hashed)
 -- admin123 sha256: 240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9
--- user123 sha256: 6025d18fe48abd45168528f18a82e265dd98d421a7084aa09f61b341703901a3
+-- user123 sha256: e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446
 
 INSERT INTO users (username, email, password_hash, full_name, phone, role) VALUES
 ('admin', 'admin@roadsafety.indore.gov.in', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'Indore Traffic Administrator', '+91 731 2522222', 'admin'),
-('rahul_sharma', 'rahul@example.com', '6025d18fe48abd45168528f18a82e265dd98d421a7084aa09f61b341703901a3', 'Rahul Sharma (Indore)', '+91 98260 11223', 'citizen'),
-('priya_patel', 'priya@example.com', '6025d18fe48abd45168528f18a82e265dd98d421a7084aa09f61b341703901a3', 'Priya Patel (Indore)', '+91 98265 33445', 'citizen');
+('rahul_sharma', 'rahul@example.com', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', 'Rahul Sharma (Indore)', '+91 98260 11223', 'citizen'),
+('priya_patel', 'priya@example.com', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', 'Priya Patel (Indore)', '+91 98265 33445', 'citizen');
 
 -- 2. Base Traffic Rules and Road Signs (Compliant with Motor Vehicles Act & Indore Traffic Police)
 INSERT INTO traffic_rules (category, title, code, description, fine_amount, icon_type, importance) VALUES

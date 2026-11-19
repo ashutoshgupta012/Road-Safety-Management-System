@@ -24,3 +24,7 @@ Thumbs.db
 
 # Large archives (optional)
 # Road_Safety_Management_System.zip
+# Project reports (Excluded from GitHub repository)
+PROJECT_REPORT.html
+PROJECT_REPORT.md
+PROJECT_REPORT.pdf
