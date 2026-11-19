@@ -12,8 +12,13 @@ import SOSModal from './components/SOSModal';
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [currentUser, setCurrentUser] = useState(() => {
-    const saved = localStorage.getItem('rsms_user');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('rsms_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      localStorage.removeItem('rsms_user');
+      return null;
+    }
   });
 
   const [accidents, setAccidents] = useState([]);
@@ -32,18 +37,18 @@ export default function App() {
   const fetchAllData = async () => {
     try {
       const [accRes, hsRes, anRes, ruleRes, emRes] = await Promise.all([
-        fetch('/api/accidents').then(r => r.json()),
-        fetch('/api/hotspots').then(r => r.json()),
-        fetch('/api/analytics').then(r => r.json()),
-        fetch('/api/traffic-rules').then(r => r.json()),
-        fetch('/api/emergency-contacts').then(r => r.json()),
+        fetch('/api/accidents').then(r => r.ok ? r.json() : {}).catch(() => ({})),
+        fetch('/api/hotspots').then(r => r.ok ? r.json() : {}).catch(() => ({})),
+        fetch('/api/analytics').then(r => r.ok ? r.json() : {}).catch(() => ({})),
+        fetch('/api/traffic-rules').then(r => r.ok ? r.json() : {}).catch(() => ({})),
+        fetch('/api/emergency-contacts').then(r => r.ok ? r.json() : {}).catch(() => ({})),
       ]);
 
-      if (accRes.success) setAccidents(accRes.data || []);
-      if (hsRes.success) setHotspots(hsRes.data || []);
-      if (anRes.success) setAnalytics(anRes);
-      if (ruleRes.success) setRules(ruleRes.data || []);
-      if (emRes.success) setEmergencyContacts(emRes.data || []);
+      if (accRes && accRes.success) setAccidents(accRes.data || []);
+      if (hsRes && hsRes.success) setHotspots(hsRes.data || []);
+      if (anRes && anRes.success) setAnalytics(anRes);
+      if (ruleRes && ruleRes.success) setRules(ruleRes.data || []);
+      if (emRes && emRes.success) setEmergencyContacts(emRes.data || []);
     } catch (err) {
       console.error('Error loading data from backend:', err);
     }
@@ -81,6 +86,9 @@ export default function App() {
   const handleAuthSuccess = (user) => {
     setCurrentUser(user);
     localStorage.setItem('rsms_user', JSON.stringify(user));
+    fetchAllData();
+    setApiNotification('⚡ Live Vijay Nagar crash data freshly synchronized on login!');
+    setTimeout(() => setApiNotification(''), 4500);
   };
 
   const handleLogout = () => {

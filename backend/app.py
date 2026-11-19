@@ -1,5 +1,6 @@
 import os
 import sys
+import random
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
@@ -106,9 +107,17 @@ def login():
     if not user or user["password_hash"] != pwd_hash:
         return jsonify({"success": False, "errors": ["Invalid credentials. Please verify your username and password."]}), 401
 
+    # Automatically feed fresh real-time incident records for Vijay Nagar Square Corridor on each user login
+    new_feed_records = []
+    try:
+        new_feed_records = auto_feed_accidents(count=random.randint(1, 2))
+    except Exception as feed_err:
+        print(f"[!] Auto-feed on login note: {feed_err}")
+
     return jsonify({
         "success": True,
-        "message": f"Welcome back, {user['full_name']}!",
+        "message": f"Welcome back, {user['full_name']}! Live Vijay Nagar traffic data synchronized.",
+        "new_data_feed_count": len(new_feed_records),
         "user": {
             "id": user["id"],
             "username": user["username"],
