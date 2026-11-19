@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, User, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
-export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
+export default function AuthModal({ isOpen = true, onClose, onAuthSuccess, onSuccess }) {
   const [isLoginTab, setIsLoginTab] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -14,7 +14,12 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  if (!isOpen) return null;
+  const handleSuccess = (user) => {
+    if (typeof onAuthSuccess === 'function') onAuthSuccess(user);
+    if (typeof onSuccess === 'function') onSuccess(user);
+  };
+
+  if (isOpen === false) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +42,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
 
       if (res.ok && data.success) {
         if (isLoginTab) {
-          onAuthSuccess(data.user);
+          handleSuccess(data.user);
           onClose();
         } else {
           setSuccessMessage('Registration successful! You can now log in.');
@@ -69,7 +74,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
       });
       const data = await res.json();
       if (res.ok && data.success) {
-        onAuthSuccess(data.user);
+        handleSuccess(data.user);
         onClose();
       } else {
         setErrorMessage(data.errors ? data.errors[0] : 'Demo login failed.');

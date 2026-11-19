@@ -207,7 +207,9 @@ export default function App() {
       {/* Auth Modal */}
       {isAuthModalOpen && (
         <AuthModal
+          isOpen={isAuthModalOpen}
           onClose={() => setIsAuthModalOpen(false)}
+          onAuthSuccess={handleAuthSuccess}
           onSuccess={handleAuthSuccess}
         />
       )}
@@ -215,6 +217,7 @@ export default function App() {
       {/* Emergency SOS Modal */}
       {isSOSModalOpen && (
         <SOSModal
+          isOpen={isSOSModalOpen}
           onClose={() => setIsSOSModalOpen(false)}
           contacts={emergencyContacts}
         />

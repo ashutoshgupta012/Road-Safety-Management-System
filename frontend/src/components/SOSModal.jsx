@@ -1,17 +1,18 @@
 import React from 'react';
 import { X, PhoneCall, AlertCircle, Shield, Copy, Check } from 'lucide-react';
 
-export default function SOSModal({ isOpen, onClose }) {
+export default function SOSModal({ isOpen = true, onClose, contacts = [] }) {
   const [copiedNumber, setCopiedNumber] = React.useState(null);
 
-  if (!isOpen) return null;
+  if (isOpen === false) return null;
 
   const helplines = [
     { number: '112', name: 'National Unified Emergency', desc: 'Police, Fire & Ambulance (Pan-India)', urgent: true },
     { number: '108', name: 'Emergency Medical Ambulance', desc: 'Direct ambulance dispatch with EMT support', urgent: true },
+    { number: '0731-4771111', name: 'Bombay Hospital Trauma Center', desc: 'Super-specialty emergency ICU (Vijay Nagar)', urgent: true },
+    { number: '0731-2550100', name: 'Vijay Nagar Police Station', desc: 'Local jurisdiction police station (Scheme 54)', urgent: false },
     { number: '1033', name: 'National Highway Helpline (NHAI)', desc: 'Highway accidents, breakdown & towing', urgent: false },
-    { number: '100', name: 'Police Control Room', desc: 'Law enforcement & immediate crime/crash response', urgent: false },
-    { number: '1073', name: 'MoRTH Road Safety Emergency', desc: 'Ministry of Road Transport and Highways helpline', urgent: false },
+    { number: '7049122222', name: 'Indore Traffic Police Helpline', desc: 'Accident recovery & crane towing support', urgent: false },
   ];
 
   const handleCopy = (num) => {

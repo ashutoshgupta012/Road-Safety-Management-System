@@ -4,10 +4,11 @@ import {
   HeartPulse, 
   Clock, 
   Copy, 
-  Check 
+  Check,
+  AlertTriangle
 } from 'lucide-react';
 
-export default function EmergencyHub({ contacts = [] }) {
+export default function EmergencyHub({ contacts = [], onOpenSOSModal }) {
   const [copiedId, setCopiedId] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -26,13 +27,37 @@ export default function EmergencyHub({ contacts = [] }) {
     <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '30px 20px' }}>
       
       {/* Title Header */}
-      <div style={{ marginBottom: '20px' }}>
-        <h1 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '0 0 4px 0' }}>
-          Emergency Helplines & SOS Response (Indore)
-        </h1>
-        <p style={{ fontSize: '0.85rem', color: '#64748b', margin: 0 }}>
-          Direct contact numbers for Ambulance, Vijay Nagar Police Station, and Bombay Hospital Trauma Center.
-        </p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '20px' }}>
+        <div>
+          <h1 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '0 0 4px 0' }}>
+            Emergency Helplines & SOS Response (Indore)
+          </h1>
+          <p style={{ fontSize: '0.85rem', color: '#64748b', margin: 0 }}>
+            Direct contact numbers for Ambulance, Vijay Nagar Police Station, and Bombay Hospital Trauma Center.
+          </p>
+        </div>
+        {onOpenSOSModal && (
+          <button
+            onClick={onOpenSOSModal}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px 18px',
+              background: '#dc2626',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '0.88rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              boxShadow: '0 4px 12px rgba(220,38,38,0.35)'
+            }}
+          >
+            <AlertTriangle size={18} />
+            Instant SOS Quick-Dial (112 / 108)
+          </button>
+        )}
       </div>
 
       {/* Golden Hour Critical Alert Banner */}
